@@ -70,18 +70,26 @@ app.whenReady().then(() => {
         ]
     });
 
-    console.log('random: ', mathLibrary.Random(1, 5));
+    // console.log('random: ', mathLibrary.Random(1, 5));
 
     
     const silLibrary = new ffi.Library("./SiUSBXp", {
         "SI_GetDLLVersion": [
             "int", ["int", "int"]
-        ]
+        ],
+        "SI_GetDriverVersion": [
+            "int", ["int", "int"]
+        ],
+        "SI_GetNumDevices": [
+            "int", ["int"]
+        ],
     });
 
     var hv
     var lv;
-    console.log('usb result :', silLibrary.SI_GetDLLVersion(hv,lv));
+    console.log('dll version result :', silLibrary.SI_GetDLLVersion(hv,lv));
+    console.log('driver version result :', silLibrary.SI_GetDriverVersion(hv,lv));
+    console.log('number of devices result :', silLibrary.SI_GetNumDevices(hv));
 
 });
 
