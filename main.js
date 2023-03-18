@@ -2,6 +2,7 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const usb = require('usb');
+const ffi = require("ffi-napi");
 
 let windows = [];
 
@@ -55,6 +56,33 @@ app.whenReady().then(() => {
         // dock icon is clicked and there are no other windows open.
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
+
+    // Import math library
+    const mathLibrary = new ffi.Library("./MathLibrary", {
+        "Subtract": [
+            "int", ["int", "int"]
+        ],
+        "Add": [
+            "int", ["int", "int"]
+        ],
+        "Random": [
+            "int", ["int", "int"]
+        ]
+    });
+
+    console.log('random: ', mathLibrary.Random(1, 5));
+
+    
+    const silLibrary = new ffi.Library("./SiUSBXp", {
+        "SI_GetDLLVersion": [
+            "int", ["int", "int"]
+        ]
+    });
+
+    var hv
+    var lv;
+    console.log('usb result :', silLibrary.SI_GetDLLVersion(hv,lv));
+
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

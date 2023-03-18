@@ -13,6 +13,7 @@
     "electron": "^19.0.0"
   },
   "dependencies": {
+    "ffi-napi": "^4.0.3",
     "usb": "^2.4.2"
   }
 }
